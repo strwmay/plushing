@@ -1,0 +1,177 @@
+/* Importando fontes */
+@import url("https://fonts.googleapis.com/css2?family=Darumadrop+One&family=Fredoka:wght@300;400;500;600;700&display=swap");
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css");
+
+/* Variáveis */
+:root {
+  --primary-color: #ffb8cc;
+  --secondary-color: #fee7c3;
+  --accent-color: #b7e7f3;
+  --dark-color: #66747f;
+  --light-color: #fcf7f0;
+  --border-radius: 20px;
+  --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Estilos gerais */
+body {
+  font-family: "Fredoka", sans-serif;
+  background-color: #fcf7f0;
+  color: #333;
+}
+
+.cute-heading {
+  font-family: "Darumadrop One", cursive;
+  color: #a97a7a;
+}
+
+/* Botões */
+.btn-primary {
+  background-color: #a97a7a;
+  border-color: #a97a7a;
+  color: #f5e4e4;
+}
+
+.btn-primary:hover {
+  background-color: #be9999;
+  border-color: #a97a7a;
+  color: #f5e4e4;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #fcf7f0;
+  box-shadow: var(--box-shadow);
+}
+
+.brand-text {
+  font-family: "Darumadrop One", cursive;
+  font-size: 1.5rem;
+  color: #ce9999;
+}
+
+.nav-link {
+  font-weight: 600;
+  color: #3f3838;
+  transition: all 0.3s;
+}
+
+.nav-link:hover {
+  color: #a97a7a;
+}
+
+/* Footer */
+footer {
+  background-color: #fcf7f0;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.footer-heading {
+  font-family: "Darumadrop One", cursive;
+  color: #a97a7a;
+}
+
+/* Home page */
+.hero-section {
+  padding: 4rem 0;
+  background-color: #fee7c3;
+  border-radius: 0 0 50px 50px;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* Como Funciona */
+.step-number {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #a97a7a;
+  color: #fcf7f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin: 0 auto;
+}
+
+.progress-container .progress-bar {
+  background-color: #a97a7a;
+}
+
+.step-indicator.active {
+  color: #a97a7a;
+}
+
+.step-indicator.active .step-number {
+  background-color: #a97a7a;
+  color: #fcf7f0;
+}
+
+/* Customizations */
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+
+@media (min-width: 768px) {
+  .color-grid {
+    grid-template-columns: repeat(10, 1fr);
+  }
+}
+
+.color-option {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.2s;
+}
+
+.color-option:hover {
+  transform: scale(1.1);
+}
+
+.color-option.selected {
+  border-color: var(--dark-color);
+  transform: scale(1.1);
+  box-shadow: 0 0 0 2px #fcf7f0, 0 0 0 4px var(--dark-color);
+}
+
+.selected-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #a97a7a;
+  color: #fcf7f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.selected-card {
+  border: 2px solid #a97a7a !important;
+  box-shadow: 0 5px 15px rgba(255, 184, 204, 0.2) !important;
+}
+
+/* Responsividade */
+@media (max-width: 767px) {
+  .hero-section {
+    text-align: center;
+  }
+}

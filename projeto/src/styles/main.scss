@@ -47,7 +47,7 @@ body {
 .brand-text {
   font-family: "Darumadrop One", cursive;
   font-size: 1.5rem;
-  color: #ce9999;
+  color: #fcf7f0; // Updated color
 }
 
 .nav-link {
@@ -111,7 +111,6 @@ footer {
 .step-indicator.active {
   color: #a97a7a;
 }
-
 .step-indicator.active .step-number {
   background-color: #a97a7a;
   color: #fcf7f0;

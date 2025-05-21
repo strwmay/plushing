@@ -1,4 +1,5 @@
 import { Link } from "react-router" // importa o componente Link para navegação
+import Ursinho from "/public/Ursinhos.jpg" // importa a imagem do ursinh
 
 const Home = () => {
   return (
@@ -10,7 +11,7 @@ const Home = () => {
             <div className="col-md-6">
               <div className="image-container">
                 <img
-                  src="https://placehold.co/450x450"
+                  src={Ursinho} // imagem do ursinho
                   alt="Urso Personalizado"
                   className="img-fluid rounded"
                 /> {/* imagem do produto */}

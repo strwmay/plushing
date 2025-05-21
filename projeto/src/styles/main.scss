@@ -16,7 +16,7 @@
 /* Estilos gerais */
 body {
   font-family: "Fredoka", sans-serif;
-  background-color: var(--light-color);
+  background-color: #fcf7f0;
   color: #333;
 }
 
@@ -27,54 +27,54 @@ body {
 
 /* Botões */
 .btn-primary {
-  background-color: var(--primary-color);
-  border-color: var(--primary-color);
-  color: #333;
+  background-color: #a97a7a;
+  border-color: #a97a7a;
+  color: #f5e4e4;
 }
 
 .btn-primary:hover {
-  background-color: #f9a5bc;
-  border-color: #f9a5bc;
-  color: #333;
+  background-color: #be9999;
+  border-color: #a97a7a;
+  color: #f5e4e4;
 }
 
 /* Navbar */
 .navbar {
-  background-color: white;
+  background-color: #fcf7f0;
   box-shadow: var(--box-shadow);
 }
 
 .brand-text {
   font-family: "Darumadrop One", cursive;
   font-size: 1.5rem;
-  color: var(--primary-color);
+  color: #ce9999;
 }
 
 .nav-link {
   font-weight: 600;
-  color: #333;
+  color: #3f3838;
   transition: all 0.3s;
 }
 
 .nav-link:hover {
-  color: var(--primary-color);
+  color: #a97a7a;
 }
 
 /* Footer */
 footer {
-  background-color: white;
+  background-color: #fcf7f0;
   border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .footer-heading {
   font-family: "Darumadrop One", cursive;
-  color: var(--primary-color);
+  color: #a97a7a;
 }
 
 /* Home page */
 .hero-section {
   padding: 4rem 0;
-  background-color: var(--secondary-color);
+  background-color: #fee7c3;
   border-radius: 0 0 50px 50px;
 }
 
@@ -95,8 +95,8 @@ footer {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: var(--primary-color);
-  color: white;
+  background-color: #a97a7a;
+  color: #fcf7f0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -105,16 +105,16 @@ footer {
 }
 
 .progress-container .progress-bar {
-  background-color: var(--primary-color);
+  background-color: #a97a7a;
 }
 
 .step-indicator.active {
-  color: var(--primary-color);
+  color: #a97a7a;
 }
 
 .step-indicator.active .step-number {
-  background-color: var(--primary-color);
-  color: white;
+  background-color: #a97a7a;
+  color: #fcf7f0;
 }
 
 /* Customizations */
@@ -146,7 +146,7 @@ footer {
 .color-option.selected {
   border-color: var(--dark-color);
   transform: scale(1.1);
-  box-shadow: 0 0 0 2px white, 0 0 0 4px var(--dark-color);
+  box-shadow: 0 0 0 2px #fcf7f0, 0 0 0 4px var(--dark-color);
 }
 
 .selected-badge {
@@ -156,8 +156,8 @@ footer {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: var(--primary-color);
-  color: white;
+  background-color: #a97a7a;
+  color: #fcf7f0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -165,7 +165,7 @@ footer {
 }
 
 .selected-card {
-  border: 2px solid var(--primary-color) !important;
+  border: 2px solid #a97a7a !important;
   box-shadow: 0 5px 15px rgba(255, 184, 204, 0.2) !important;
 }
 
@@ -175,4 +175,3 @@ footer {
     text-align: center;
   }
 }
-

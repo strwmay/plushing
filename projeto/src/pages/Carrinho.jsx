@@ -20,7 +20,7 @@ const Carrinho = ({ cart, setCart }) => {
   const handleCheckout = () => {
     // simulação de finalização de compra
     setTimeout(() => {
-      navigate("/payment-success") // redireciona para a página de sucesso
+      navigate("/metodo-pagamento") // redireciona para a página de sucesso
       setCart([]) // limpa o carrinho
     }, 1000)
   }

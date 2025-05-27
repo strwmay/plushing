@@ -15,6 +15,7 @@ import Carrinho from "./pages/Carrinho";
 import Login from "./pages/Login"; 
 import Registro from "./pages/Registro"; 
 import ProtectedRoute from "./components/ProtectedRoute"; 
+import MetodoPagamento from "./pages/MetodoPagamento";
 import PaymentSuccess from "./pages/PaymentSuccess"; 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // verificando se o usuário está logado
@@ -82,6 +83,15 @@ function App() {
                   <PaymentSuccess /> 
                 </ProtectedRoute>
               } 
+            />
+            <Route
+              path="/metodo-pagamento"
+              element={
+                <ProtectedRoute isLoggedIn={isLoggedIn}> {/* protege a rota de método de pagamento */}
+                  <MetodoPagamento /> {/* componente de método de pagamento */}
+                
+                </ProtectedRoute>
+              }
             />
           </Routes>
         </main>

@@ -5,8 +5,6 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./styles/main.scss";
 
-// importando componentes
-<<<<<<< HEAD
 import Navbar from "./components/NavBar"; 
 import Footer from "./components/Footer"; 
 import Home from "./pages/Home"; 
@@ -18,18 +16,7 @@ import Registro from "./pages/Registro";
 import ProtectedRoute from "./components/ProtectedRoute"; 
 import MetodoPagamento from "./pages/MetodoPagamento";
 import PaymentSuccess from "./pages/PaymentSuccess"; 
-=======
-import Navbar from "./components/NavBar";
-import Footer from "./components/Footer";
-import Home from "./pages/Home";
-import Customize from "./pages/Customize";
-import Perfil from "./pages/Perfil";
-import Carrinho from "./pages/Carrinho";
-import Login from "./pages/Login";
-import Registro from "./pages/Registro";
-import ProtectedRoute from "./components/ProtectedRoute";
-import PaymentSuccess from "./pages/PaymentSuccess";
->>>>>>> fc744114e42329b3761c7c5a825a836c208825af
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // verificando se o usuário está logado
   const [cart, setCart] = useState([]); // armazenando os itens do carrinho

@@ -1,11 +1,12 @@
-import { useState } from "react"; 
-import { BrowserRouter, Routes, Route } from "react-router"; 
-import "bootstrap/dist/css/bootstrap.min.css"; 
+import { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js"; 
-import "./styles/main.scss"; 
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import "./styles/main.scss";
 
 // importando componentes
+<<<<<<< HEAD
 import Navbar from "./components/NavBar"; 
 import Footer from "./components/Footer"; 
 import Home from "./pages/Home"; 
@@ -17,6 +18,18 @@ import Registro from "./pages/Registro";
 import ProtectedRoute from "./components/ProtectedRoute"; 
 import MetodoPagamento from "./pages/MetodoPagamento";
 import PaymentSuccess from "./pages/PaymentSuccess"; 
+=======
+import Navbar from "./components/NavBar";
+import Footer from "./components/Footer";
+import Home from "./pages/Home";
+import Customize from "./pages/Customize";
+import Perfil from "./pages/Perfil";
+import Carrinho from "./pages/Carrinho";
+import Login from "./pages/Login";
+import Registro from "./pages/Registro";
+import ProtectedRoute from "./components/ProtectedRoute";
+import PaymentSuccess from "./pages/PaymentSuccess";
+>>>>>>> fc744114e42329b3761c7c5a825a836c208825af
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // verificando se o usuário está logado
   const [cart, setCart] = useState([]); // armazenando os itens do carrinho
@@ -34,15 +47,17 @@ function App() {
   };
 
   return (
-    <div className="app-container d-flex flex-column min-vh-100"> 
-      <BrowserRouter> {/* fornece o contexto de roteamento */}
+    <div className="app-container d-flex flex-column min-vh-100">
+      <BrowserRouter>
+        {" "}
+        {/* fornece o contexto de roteamento */}
         <Navbar
           isLoggedIn={isLoggedIn} // estado de login
           handleLogout={handleLogout} // função de logout
           cartItems={cart.length} // número de itens no carrinho
         />
-        <main className="flex-grow-1"> 
-          <Routes> 
+        <main className="flex-grow-1">
+          <Routes>
             <Route path="/" element={<Home />} /> {/* rota página inicial */}
             <Route
               path="/customize"
@@ -51,7 +66,7 @@ function App() {
             <Route
               path="/login"
               element={
-                <Login handleLogin={handleLogin} isLoggedIn={isLoggedIn} /> // rota p login 
+                <Login handleLogin={handleLogin} isLoggedIn={isLoggedIn} /> // rota p login
               }
             />
             <Route
@@ -63,26 +78,31 @@ function App() {
             <Route
               path="/perfil"
               element={
-                <ProtectedRoute isLoggedIn={isLoggedIn}> {/* protege a rota do perfil */}
-                  <Perfil /> 
+                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  {/* protege a rota do perfil */}
+                  <Perfil />
                 </ProtectedRoute>
               }
             />
             <Route
               path="/carrinho"
               element={
-                <ProtectedRoute isLoggedIn={isLoggedIn}> {/* protege a rota do carrinho */}
-                  <Carrinho cart={cart} setCart={setCart} /> 
+                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  {" "}
+                  {/* protege a rota do carrinho */}
+                  <Carrinho cart={cart} setCart={setCart} />
                 </ProtectedRoute>
               }
             />
-            <Route 
-              path="/payment-success" 
+            <Route
+              path="/payment-success"
               element={
-                <ProtectedRoute isLoggedIn={isLoggedIn}> {/* protege a rota de sucesso de pagamento */}
-                  <PaymentSuccess /> 
+                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  {" "}
+                  {/* protege a rota de sucesso de pagamento */}
+                  <PaymentSuccess />
                 </ProtectedRoute>
-              } 
+              }
             />
             <Route
               path="/metodo-pagamento"
@@ -95,10 +115,10 @@ function App() {
             />
           </Routes>
         </main>
-        <Footer /> 
+        <Footer />
       </BrowserRouter>
     </div>
   );
 }
 
-export default App; 
+export default App;

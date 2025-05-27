@@ -20,6 +20,7 @@ uma aplicação web desenvolvida com React + Vite, focada na venda de ursinhos p
 
 ## ⋆ Instalação e uso
 
+```
 # 1. Clone o repositório
 git clone https://github.com/seu-usuario/devsteam.git
 
@@ -31,3 +32,4 @@ npm install
 
 # 4. Inicie o servidor de desenvolvimento
 npm run dev
+```

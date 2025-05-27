@@ -314,10 +314,11 @@ const Customize = ({ addToCart }) => {
                         key={acc.id}
                         className="accessory-icon"
                         style={{
-                          position: "absolute",
-                          top: `${15 + index * 25}px`, // posição dos acessórios
-                          right: `${15 + index * 10}px`,
-                          fontSize: "20px", // tamanho do emoji
+                          position: acc.id === "laço" || acc.id === "gravata" || acc.id === "chapeu" || acc.id === "oculos" ? "absolute" : "absolute",
+                          top: acc.id === "oculos" ? "30px" : acc.id === "chapeu" ? "-15px" : acc.id === "laço" ? "-10px" : acc.id === "gravata" ? "125px" : `${15 + index * 25}px`,
+                          left: acc.id === "laço" ? "80px" : acc.id === "oculos" || acc.id === "chapeu" || acc.id === "gravata" ? "50%" : "auto",
+                          transform: acc.id === "oculos" || acc.id === "chapeu" || acc.id === "gravata" ? "translateX(-50%)" : "none",
+                          fontSize: acc.id === "oculos" ? "60px" : "20px",
                         }}
                       >
                         {acc.emoji}
@@ -448,4 +449,4 @@ const Customize = ({ addToCart }) => {
   )
 }
 
-export default Customize 
+export default Customize

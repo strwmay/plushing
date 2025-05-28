@@ -6,6 +6,7 @@ const Login = ({ handleLogin, isLoggedIn }) => {
   const [email, setEmail] = useState("") // estado para armazenar o email do usuário
   const [password, setPassword] = useState("") // estado para armazenar a senha do usuário
   const [error, setError] = useState("") // estado para exibir mensagens de erro
+  
 
   // função para validar os dados do formulário
   const validateForm = () => {
@@ -25,11 +26,13 @@ const Login = ({ handleLogin, isLoggedIn }) => {
 
   // função para lidar com o envio do formulário
   const handleSubmit = (e) => {
-    e.preventDefault() // previne o comportamento padrão do formulário
-    setError("") // limpa mensagens de erro anteriores
+    e.preventDefault(); // previne o comportamento padrão do formulário
+    setError(""); // limpa mensagens de erro anteriores
 
     if (validateForm()) {
-      handleLogin() // chama a função de login passada como prop
+      const novoUsuario = { email }; // Cria um objeto com o email do usuário
+      localStorage.setItem("devlogin", JSON.stringify(novoUsuario)); // Salva no localStorage
+      handleLogin(novoUsuario); // Chama a função de login passada como prop
     }
   }
 

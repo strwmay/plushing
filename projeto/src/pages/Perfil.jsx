@@ -1,46 +1,54 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"; // Import useEffect
 
 // Componente de perfil do usuário
 const Perfil = () => {
   // Estado para armazenar os dados do usuário
   const [userData, setUserData] = useState({
-    name: "Usuário Exemplo",
-    email: "usuario@exemplo.com",
-    phone: "(11) 99999-9999",
-    address: "Rua Exemplo, 123",
-  })
+    name: "", // Inicializa o nome vazio
+    email: "", //inicia com o email q estava n login
+    phone: "",
+    address: "",
+  });
 
-  const [isEditing, setIsEditing] = useState(false) // Estado para alternar entre visualização e edição
-  const [formData, setFormData] = useState({ ...userData }) // Estado para armazenar os dados do formulário
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("devlogin")); // Recupera o email do localStorage
+    if (storedUser && storedUser.email) {
+      const userName = storedUser.email.split("@")[0]; // Extrai o nome do email
+      setUserData((prevData) => ({ ...prevData, name: userName, email: storedUser.email })); // Atualiza o nome e email no estado
+    }
+  }, []);
+
+  const [isEditing, setIsEditing] = useState(false); // Estado para alternar entre visualização e edição
+  const [formData, setFormData] = useState({ ...userData }); // Estado para armazenar os dados do formulário
 
   // Atualiza os dados do formulário conforme o usuário digita
   const handleChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
-    })
-  }
+    });
+  };
 
   // Salva as alterações feitas no formulário
   const handleSubmit = (e) => {
-    e.preventDefault()
-    setUserData({ ...formData }) // Atualiza os dados do usuário
-    setIsEditing(false) // Sai do modo de edição
-  }
+    e.preventDefault();
+    setUserData({ ...formData }); // Atualiza os dados do usuário
+    setIsEditing(false); // Sai do modo de edição
+  };
 
   // Dados fictícios de pedidos do usuário
   const orders = [
     { id: "1001", date: "10/04/2023", status: "Entregue", total: 89.9 },
     { id: "1002", date: "25/05/2023", status: "Em produção", total: 129.8 },
     { id: "1003", date: "12/06/2023", status: "Em transporte", total: 99.9 },
-  ]
+  ];
 
   return (
     <div className="profile-page py-5">
       <div className="container">
         <h1 className="mb-4 cute-heading">Meu Perfil</h1>
-
+        
         <div className="row">
           {/* Seção de informações do perfil */}
           <div className="col-md-4 mb-4">
@@ -58,9 +66,9 @@ const Perfil = () => {
                       color: "#fff",
                     }}
                   >
-                    {userData.name.charAt(0)}
+                    {userData.name.charAt(0).toUpperCase()}
                   </div>
-                  <h5 className="cute-heading">{userData.name}</h5>
+                  <h5 className="cute-heading">Olá, {userData.name}!</h5> {/* Exibe o nome do usuário */}
                   <p className="text-muted">{userData.email}</p>
                 </div>
 
@@ -140,8 +148,8 @@ const Perfil = () => {
                         className="btn flex-grow-1 rounded-pill"
                         style={{ backgroundColor: "#d9a679", color: "#5a3e2b" }}
                         onClick={() => {
-                          setFormData({ ...userData }) // Restaura os dados originais
-                          setIsEditing(false) // Sai do modo de edição
+                          setFormData({ ...userData }); // Restaura os dados originais
+                          setIsEditing(false); // Sai do modo de edição
                         }}
                       >
                         Cancelar
@@ -210,8 +218,8 @@ const Perfil = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Perfil
+export default Perfil;
 

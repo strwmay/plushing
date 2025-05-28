@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Importa o hook para navegação
+import { useNavigate } from "react-router"; // Importa o hook para navegação
 import Pix from "../components/Pix";
 import Cartao from "../components/Cartao";
 

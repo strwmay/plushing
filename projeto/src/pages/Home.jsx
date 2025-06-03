@@ -69,7 +69,7 @@ const Home = () => {
       </section>
 
       {/* seção explicando como funciona o processo */}
-      <section className="como-funciona-section py-5">
+      <section  id="comoFunciona" className="como-funciona-section py-5">
         <div className="container">
           <h2 className="text-center mb-5 cute-heading">Como Funciona?</h2> {/* título da seção */}
           <div className="row align-items-center mb-5">

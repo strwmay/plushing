@@ -1,12 +1,23 @@
-import { Link } from "react-router";
-import Plushing from "/public/Plushing.png"; // importando a imagem do logo
-import React, { useState } from "react"; // Import useState
+import { Link, useNavigate } from "react-router"; // Importa useNavigate
+import Plushing from "/public/Plushing.png";
+import React, { useState } from "react";
 
 const Navbar = ({ isLoggedIn, handleLogout, cartItems }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // State to track menu open/close
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate(); // Inicializa useNavigate
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen); // Toggle menu state
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleConhecaClick = () => {
+    navigate("/"); // Navega para a página inicial (Home)
+    setTimeout(() => {
+      const element = document.getElementById("comoFunciona");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" }); // Rola até a div alvo
+      }
+    }, 100); // Atraso para garantir que a navegação seja concluída
   };
 
   return (
@@ -15,44 +26,33 @@ const Navbar = ({ isLoggedIn, handleLogout, cartItems }) => {
       style={{ backgroundColor: "#8b5e3c" }}
     >
       <div className="container" style={isMenuOpen ? {} : { height: "100px" }}>
-        {/* The height is fixed only when the menu is closed */}
         <Link className="navbar-brand me-4" to="/" style={{ color: "#fff" }}>
           <img
             src={Plushing}
             alt=""
-            style={{ width: "150px", height: "150px" }} // Ajuste de tamanho e posição
+            style={{ width: "150px", height: "150px" }}
           />
         </Link>
-        {/* botão para expandir/colapsar o menu em telas menores */}
         <button
           className="navbar-toggler"
           type="button"
-          onClick={toggleMenu} // Use toggleMenu function
-          aria-expanded={isMenuOpen} // Update aria-expanded dynamically
+          onClick={toggleMenu}
+          aria-expanded={isMenuOpen}
         >
           <span className="navbar-toggler-icon"></span>
         </button>
         <div
-          className={`collapse navbar-collapse ${isMenuOpen ? "show" : ""}`} // Dynamically add 'show' class
+          className={`collapse navbar-collapse ${isMenuOpen ? "show" : ""}`}
           id="navbarNav"
         >
-          <style>
-            {`
-              .nav-link {
-                color: #ffffff; /* Cor fixa atual */
-                transition: color 0.3s;
-              }
-              .nav-link:hover {
-                color: #b3a2a0; /* Cor ao passar o mouse */
-              }
-            `}
-          </style>
           <ul className="navbar-nav me-auto">
-            {/* links principais da barra de navegação */}
             <li className="nav-item me-3">
-              <Link className="nav-link fs-5" to="/">
+              <button
+                className="nav-link fs-5 btn btn-link p-0"
+                onClick={handleConhecaClick} // Usa o manipulador de clique
+              >
                 Conheça
-              </Link>
+              </button>
             </li>
             <li className="nav-item">
               <Link className="nav-link fs-5" to="/customize">
@@ -61,12 +61,11 @@ const Navbar = ({ isLoggedIn, handleLogout, cartItems }) => {
             </li>
           </ul>
           <div className="d-flex flex align-items-center">
-            <div className="nav-icons d-flex  gap-3">
-              {/* icone de perfil/login com dropdown para usuários logados */}
+            <div className="nav-icons d-flex gap-3">
               {isLoggedIn ? (
                 <div className="dropdown">
                   <button
-                    className="btn btn-link text-dark p-0 icon-btn "
+                    className="btn btn-link text-dark p-0 icon-btn"
                     type="button"
                     id="profileDropdown"
                     data-bs-toggle="collapse"
@@ -74,11 +73,11 @@ const Navbar = ({ isLoggedIn, handleLogout, cartItems }) => {
                   ></button>
                   <Link
                     to={"/perfil"}
-                    className="btn btn-link text-dark p-0  icon-btn"
+                    className="btn btn-link text-dark p-0 icon-btn"
                   >
                     <i
                       className="bi bi-person-circle"
-                      style={{ color: "#fff", fontSize: "1.5rem" }} // Increased font size
+                      style={{ color: "#fff", fontSize: "1.5rem" }}
                     ></i>
                   </Link>
                   <ul
@@ -87,13 +86,11 @@ const Navbar = ({ isLoggedIn, handleLogout, cartItems }) => {
                     aria-labelledby="profileDropdown"
                   >
                     <li>
-                      {/* link para a página de perfil */}
                       <Link className="dropdown-item" to="/perfil">
                         Meu Perfil
                       </Link>
                     </li>
                     <li>
-                      {/* botão para logout */}
                       <button className="dropdown-item" onClick={handleLogout}>
                         Sair
                       </button>
@@ -101,26 +98,25 @@ const Navbar = ({ isLoggedIn, handleLogout, cartItems }) => {
                   </ul>
                 </div>
               ) : (
-                // link para a página de login caso o usuário não esteja logado
                 <Link
                   to="/login"
                   className="btn btn-link text-dark p-0 me-3 icon-btn"
                 >
                   <i
                     className="bi bi-person-circle"
-                    style={{ color: "#fff", fontSize: "1.5rem" }} // Increased font size
+                    style={{ color: "#fff", fontSize: "1.5rem" }}
                   ></i>
                 </Link>
               )}
-              {/* icone do carrinho com contador de itens */}
               <Link
                 to="/carrinho"
                 className="btn btn-link text-dark p-0 position-relative icon-btn"
               >
-                <i className="bi bi-cart" style={{ color: "#fff", fontSize: "1.5rem" }} // Increased font size
+                <i
+                  className="bi bi-cart"
+                  style={{ color: "#fff", fontSize: "1.5rem" }}
                 ></i>
                 {cartItems > 0 && (
-                  // exibe o contador de itens no carrinho se houver itens
                   <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                     {cartItems}
                   </span>

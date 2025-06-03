@@ -5,17 +5,17 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./styles/main.scss";
 
-import Navbar from "./components/NavBar"; 
-import Footer from "./components/Footer"; 
-import Home from "./pages/Home"; 
-import Customize from "./pages/Customize"; 
-import Perfil from "./pages/Perfil"; 
-import Carrinho from "./pages/Carrinho"; 
-import Login from "./pages/Login"; 
-import Registro from "./pages/Registro"; 
-import ProtectedRoute from "./components/ProtectedRoute"; 
+import Navbar from "./components/NavBar";
+import Footer from "./components/Footer";
+import Home from "./pages/Home";
+import Customize from "./pages/Customize";
+import Perfil from "./pages/Perfil";
+import Carrinho from "./pages/Carrinho";
+import Login from "./pages/Login";
+import Registro from "./pages/Registro";
+import ProtectedRoute from "./components/ProtectedRoute";
 import MetodoPagamento from "./pages/MetodoPagamento";
-import PaymentSuccess from "./pages/PaymentSuccess"; 
+import PaymentSuccess from "./pages/PaymentSuccess";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // verificando se o usuário está logado
@@ -46,6 +46,7 @@ function App() {
         <main className="flex-grow-1">
           <Routes>
             <Route path="/" element={<Home />} /> {/* rota página inicial */}
+            
             <Route
               path="/customize"
               element={<Customize addToCart={addToCart} />} // rota página de personalização com função de adicionar ao carrinho
@@ -94,9 +95,10 @@ function App() {
             <Route
               path="/metodo-pagamento"
               element={
-                <ProtectedRoute isLoggedIn={isLoggedIn}> {/* protege a rota de método de pagamento */}
+                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  {" "}
+                  {/* protege a rota de método de pagamento */}
                   <MetodoPagamento /> {/* componente de método de pagamento */}
-                
                 </ProtectedRoute>
               }
             />

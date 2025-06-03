@@ -60,6 +60,18 @@ body {
   color: #d5bdbd;
 }
 
+/* Button styles for Conheça */
+.nav-link.btn-link {
+  font-size: 1.25rem; /* Match original font size */
+  color: #3f3838; /* Original color */
+  text-decoration: none; /* Remove underline */
+  padding: 0; /* Match original padding */
+}
+
+.nav-link.btn-link:hover {
+  color: #d5bdbd; /* Hover color */
+}
+
 /* Footer */
 footer {
   background-color: #fcf7f0;

@@ -62,67 +62,7 @@ const Navbar = ({ isLoggedIn, handleLogout, cartItems }) => {
           </ul>
           <div className="d-flex flex align-items-center">
             <div className="nav-icons d-flex gap-3">
-              {/* {isLoggedIn ? (
-                <div className="dropdown">
-                  <button
-                    className="btn btn-link text-dark p-0 icon-btn"
-                    type="button"
-                    id="profileDropdown"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#headerMenu"
-                  ></button>
-                  <Link
-                    to={"/perfil"}
-                    className="btn btn-link text-dark p-0 icon-btn"
-                  >
-                    <i
-                      className="bi bi-person-circle"
-                      style={{ color: "#fff", fontSize: "1.5rem" }}
-                    ></i>
-                  </Link>
-                  <ul
-                    id="headerMenu"
-                    className="dropdown-menu dropdown-menu-end"
-                    aria-labelledby="profileDropdown"
-                  >
-                    <li>
-                      <Link className="dropdown-item" to="/perfil">
-                        Meu Perfil
-                      </Link>
-                    </li>
-                    <li>
-                      <button className="dropdown-item" onClick={handleLogout}>
-                        Sair
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              ) : (
-                <Link
-                  to="/login"
-                  className="btn btn-link text-dark p-0 me-3 icon-btn"
-                >
-                  <i
-                    className="bi bi-person-circle"
-                    style={{ color: "#fff", fontSize: "1.5rem" }}
-                  ></i>
-                </Link>
-              )}
-              <Link
-                to="/carrinho"
-                className="btn btn-link text-dark p-0 position-relative icon-btn"
-              >
-                <i
-                  className="bi bi-cart"
-                  style={{ color: "#fff", fontSize: "1.5rem" }}
-                ></i>
-                {cartItems > 0 && (
-                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                    {cartItems}
-                  </span>
-                )} */}
               {
-                //Recuoerar o LocalStorage para verificar se o usuário está logado
                 localStorage.getItem("user") ? (
                   <>
                     <div className="dropdown">
@@ -152,7 +92,6 @@ const Navbar = ({ isLoggedIn, handleLogout, cartItems }) => {
                             Meu Perfil
                           </Link>
                         </li>
-                        <li></li>
                       </ul>
                     </div>
                     <Link
@@ -169,7 +108,12 @@ const Navbar = ({ isLoggedIn, handleLogout, cartItems }) => {
                         </span>
                       )}
                     </Link>
-                    <button onClick={handleLogout}>Sair</button>
+                    <button
+                      className="btn btn-link text-light p-0 fs-5"
+                      onClick={handleLogout}
+                    >
+                      Sair
+                    </button>
                   </>
                 ) : (
                   <>
@@ -187,7 +131,12 @@ const Navbar = ({ isLoggedIn, handleLogout, cartItems }) => {
                         </span>
                       )}
                     </Link>
-                    <Link to="/login">Entrar</Link>
+                    <Link
+                      to="/login"
+                      className="btn btn-link text-light p-0 fs-5"
+                    >
+                      Entrar
+                    </Link>
                   </>
                 )
               }

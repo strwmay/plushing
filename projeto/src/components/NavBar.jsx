@@ -109,7 +109,7 @@ const Navbar = ({ isLoggedIn, handleLogout, cartItems }) => {
                       )}
                     </Link>
                     <button
-                      className="btn btn-link text-light p-0 fs-5"
+                      className="btn btn-link text-light p-0 fs-5 text-decoration-none"
                       onClick={handleLogout}
                     >
                       Sair
@@ -133,7 +133,7 @@ const Navbar = ({ isLoggedIn, handleLogout, cartItems }) => {
                     </Link>
                     <Link
                       to="/login"
-                      className="btn btn-link text-light p-0 fs-5"
+                      className="btn btn-link text-light p-0 fs-5 text-decoration-none"
                     >
                       Entrar
                     </Link>

@@ -52,24 +52,24 @@ body {
 
 .nav-link {
   font-weight: 600;
-  color: #3f3838;
+  color: #d5bdbd;
   transition: all 0.3s;
 }
 
 .nav-link:hover {
-  color: #d5bdbd;
+  color: #fbe3e3;
 }
 
 /* Button styles for Conheça */
 .nav-link.btn-link {
   font-size: 1.25rem; /* Match original font size */
-  color: #3f3838; /* Original color */
+  color: #d5bdbd; /* Original color */
   text-decoration: none; /* Remove underline */
   padding: 0; /* Match original padding */
 }
 
 .nav-link.btn-link:hover {
-  color: #d5bdbd; /* Hover color */
+  color: #fbe3e3; /* Hover color */
 }
 
 /* Footer */

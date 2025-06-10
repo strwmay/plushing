@@ -45,8 +45,8 @@ const Navbar = ({ isLoggedIn, handleLogout, cartItems }) => {
           className={`collapse navbar-collapse ${isMenuOpen ? "show" : ""}`}
           id="navbarNav"
         >
-          <ul className="navbar-nav me-auto">
-            <li className="nav-item me-3">
+          <div className="navbar-nav me-auto d-flex justify-content-center align-items-center gap-3">
+            <li className="nav-item">
               <button
                 className="nav-link fs-5 btn btn-link p-0"
                 onClick={handleConhecaClick} // Usa o manipulador de clique
@@ -55,11 +55,11 @@ const Navbar = ({ isLoggedIn, handleLogout, cartItems }) => {
               </button>
             </li>
             <li className="nav-item">
-              <Link className="nav-link fs-5" to="/customize">
+              <Link className="nav-link fs-5 btn btn-link p-0" to="/customize">
                 Customize
               </Link>
             </li>
-          </ul>
+          </div>
           <div className="d-flex flex align-items-center">
             <div className="nav-icons d-flex gap-3">
               {isLoggedIn ? (

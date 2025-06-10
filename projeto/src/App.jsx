@@ -18,15 +18,25 @@ import MetodoPagamento from "./pages/MetodoPagamento";
 import PaymentSuccess from "./pages/PaymentSuccess";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // verificando se o usuário está logado
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    // Verifica se o usuário está logado com base no localStorage
+    const user = localStorage.getItem("user");
+    return user ? true : false;
+  });
+  
   const [cart, setCart] = useState([]); // armazenando os itens do carrinho
-
-  const handleLogin = () => {
-    setIsLoggedIn(true); // definindo o estado de login como verdadeiro
+  
+  const handleLogin = (userData) => {
+    if (userData && userData.token) {
+      localStorage.setItem("user", JSON.stringify(userData)); // Armazena os dados do usuário no localStorage
+      setIsLoggedIn(true); // Define como logado
+    }
   };
 
   const handleLogout = () => {
-    setIsLoggedIn(false); // como falso
+    localStorage.removeItem("user"); // Remove o item 'user' do localStorage
+    localStorage.removeItem("isLoggedIn"); // Remove o estado de login, se necessário
+    window.location.href = "/"; // Redireciona para a página inicial
   };
 
   const addToCart = (item) => {
@@ -46,7 +56,6 @@ function App() {
         <main className="flex-grow-1">
           <Routes>
             <Route path="/" element={<Home />} /> {/* rota página inicial */}
-            
             <Route
               path="/customize"
               element={<Customize addToCart={addToCart} />} // rota página de personalização com função de adicionar ao carrinho

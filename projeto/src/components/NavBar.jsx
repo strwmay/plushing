@@ -62,7 +62,7 @@ const Navbar = ({ isLoggedIn, handleLogout, cartItems }) => {
           </ul>
           <div className="d-flex flex align-items-center">
             <div className="nav-icons d-flex gap-3">
-              {isLoggedIn ? (
+              {/* {isLoggedIn ? (
                 <div className="dropdown">
                   <button
                     className="btn btn-link text-dark p-0 icon-btn"
@@ -120,8 +120,77 @@ const Navbar = ({ isLoggedIn, handleLogout, cartItems }) => {
                   <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                     {cartItems}
                   </span>
-                )}
-              </Link>
+                )} */}
+              {
+                //Recuoerar o LocalStorage para verificar se o usuário está logado
+                localStorage.getItem("user") ? (
+                  <>
+                    <div className="dropdown">
+                      <button
+                        className="btn btn-link text-dark p-0 icon-btn"
+                        type="button"
+                        id="profileDropdown"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#headerMenu"
+                      ></button>
+                      <Link
+                        to={"/perfil"}
+                        className="btn btn-link text-dark p-0 icon-btn"
+                      >
+                        <i
+                          className="bi bi-person-circle"
+                          style={{ color: "#fff", fontSize: "1.5rem" }}
+                        ></i>
+                      </Link>
+                      <ul
+                        id="headerMenu"
+                        className="dropdown-menu dropdown-menu-end"
+                        aria-labelledby="profileDropdown"
+                      >
+                        <li>
+                          <Link className="dropdown-item" to="/perfil">
+                            Meu Perfil
+                          </Link>
+                        </li>
+                        <li></li>
+                      </ul>
+                    </div>
+                    <Link
+                      to="/carrinho"
+                      className="btn btn-link text-dark p-0 position-relative icon-btn"
+                    >
+                      <i
+                        className="bi bi-cart"
+                        style={{ color: "#fff", fontSize: "1.5rem" }}
+                      ></i>
+                      {cartItems > 0 && (
+                        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                          {cartItems}
+                        </span>
+                      )}
+                    </Link>
+                    <button onClick={handleLogout}>Sair</button>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      to="/carrinho"
+                      className="btn btn-link text-dark p-0 position-relative icon-btn"
+                    >
+                      <i
+                        className="bi bi-cart"
+                        style={{ color: "#fff", fontSize: "1.5rem" }}
+                      ></i>
+                      {cartItems > 0 && (
+                        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                          {cartItems}
+                        </span>
+                      )}
+                    </Link>
+                    <Link to="/login">Entrar</Link>
+                  </>
+                )
+              }
             </div>
           </div>
         </div>

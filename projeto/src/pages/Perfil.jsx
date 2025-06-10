@@ -1,225 +1,191 @@
-import { useEffect, useState } from "react"; // Import useEffect
+import React, { useState, useEffect } from "react";
 
-// Componente de perfil do usuário
 const Perfil = () => {
   // Estado para armazenar os dados do usuário
   const [userData, setUserData] = useState({
     name: "", // Inicializa o nome vazio
-    email: "", //inicia com o email q estava n login
+    email: "", // Inicia com o email que estava no login
     phone: "",
-    address: "",
+    cpf: "", // Substitui o campo "address" por "cpf"
   });
+  const [isEditing, setIsEditing] = useState(false); // Estado para controlar o modo de edição
+  const [error, setError] = useState(null); // Estado para armazenar erros
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("devlogin")); // Recupera o email do localStorage
-    if (storedUser && storedUser.email) {
-      const userName = storedUser.email.split("@")[0]; // Extrai o nome do email
-      setUserData((prevData) => ({ ...prevData, name: userName, email: storedUser.email })); // Atualiza o nome e email no estado
+    const email = localStorage.getItem("email"); //
+
+    setUserData((prevData) => ({ ...prevData, email: email || "" }));
+    if (email) {
+      fetch(`https://localhost:7107/api/Acoes/verificar-cliente/${email}`, {
+        method: "GET",
+        headers: {
+          accept: "*/*",
+        },
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json(); // Retorna os dados do cliente
+          } else if (response.status === 204) {
+            setIsEditing(true); // Ativa o modo de edição
+            return null;
+          } else {
+            throw new Error("Erro ao verificar cliente.");
+          }
+        })
+        .then((data) => {
+          if (data) {
+            setUserData({
+              name: data.name || "",
+              email: data.email || email, // Usa o email do cliente ou o do localStorage
+              phone: data.phone || "",
+              cpf: data.cpf || "", // Adiciona o CPF retornado pelo servidor
+            });
+          }
+        })
+        .catch((error) => {
+          setError(error.message);
+          console.error(error);
+        });
     }
   }, []);
 
-  const [isEditing, setIsEditing] = useState(false); // Estado para alternar entre visualização e edição
-  const [formData, setFormData] = useState({ ...userData }); // Estado para armazenar os dados do formulário
+  const handleSave = (e) => {
+    e.preventDefault(); // Previne o comportamento padrão do formulário
 
-  // Atualiza os dados do formulário conforme o usuário digita
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    // Recuperar o email salvo no LocalStorage email
+    const email = localStorage.getItem("email"); // Usa o email do localStorage ou do estado
+
+    console.log(email);
+
+    fetch(`https://localhost:7107/api/Acoes/cadastar-perfil/${email}`, {
+      method: "PUT", // Altera o método para PUT
+      headers: {
+        "Content-Type": "application/json",
+        accept: "*/*",
+      },
+      body: JSON.stringify({
+        nome: userData.name, // Dados do formulário
+        telefone: userData.phone,
+        cpf: userData.cpf || "", // Adiciona o CPF
+      }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          setIsEditing(false); // Sai do modo de edição após salvar
+        } else {
+          throw new Error("Erro ao salvar os dados.");
+        }
+      })
+      .catch((error) => {
+        setError(error.message);
+        console.error(error);
+      });
   };
-
-  // Salva as alterações feitas no formulário
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setUserData({ ...formData }); // Atualiza os dados do usuário
-    setIsEditing(false); // Sai do modo de edição
-  };
-
-  // Dados fictícios de pedidos do usuário
-  const orders = [
-    { id: "1001", date: "10/04/2023", status: "Entregue", total: 89.9 },
-    { id: "1002", date: "25/05/2023", status: "Em produção", total: 129.8 },
-    { id: "1003", date: "12/06/2023", status: "Em transporte", total: 99.9 },
-  ];
 
   return (
-    <div className="profile-page py-5">
+    <div className="perfil-page py-5">
       <div className="container">
-        <h1 className="mb-4 cute-heading">Meu Perfil</h1>
-        
-        <div className="row">
-          {/* Seção de informações do perfil */}
-          <div className="col-md-4 mb-4">
-            <div className="card border-0 shadow-sm rounded-4" style={{ backgroundColor: "#f5e4d3" }}>
-              <div className="card-body p-4">
-                <div className="text-center mb-3">
-                  {/* Avatar do usuário */}
-                  <div
-                    className="avatar-placeholder rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3"
-                    style={{
-                      width: "100px",
-                      height: "100px",
-                      fontSize: "2rem",
-                      backgroundColor: "#ffb8cc",
-                      color: "#fff",
-                    }}
-                  >
-                    {userData.name.charAt(0).toUpperCase()}
-                  </div>
-                  <h5 className="cute-heading">Olá, {userData.name}!</h5> {/* Exibe o nome do usuário */}
-                  <p className="text-muted">{userData.email}</p>
-                </div>
-
-                {/* Exibe informações ou formulário de edição */}
-                {!isEditing ? (
-                  <>
-                    <div className="mb-3">
-                      <strong>Telefone:</strong> {userData.phone}
-                    </div>
-                    <div className="mb-3">
-                      <strong>Endereço:</strong> {userData.address}
-                    </div>
-                    <button className="btn w-100 rounded-pill" style={{ backgroundColor: "#8b5e3c", color: "#fff" }} onClick={() => setIsEditing(true)}>
-                      Editar Perfil
-                    </button>
-                  </>
-                ) : (
-                  <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                      <label htmlFor="name" className="form-label">
-                        Nome
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control rounded-pill"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <label htmlFor="email" className="form-label">
-                        Email
-                      </label>
-                      <input
-                        type="email"
-                        className="form-control rounded-pill"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <label htmlFor="phone" className="form-label">
-                        Telefone
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control rounded-pill"
-                        id="phone"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <label htmlFor="address" className="form-label">
-                        Endereço
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control rounded-pill"
-                        id="address"
-                        name="address"
-                        value={formData.address}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="d-flex gap-2">
-                      <button type="submit" className="btn flex-grow-1 rounded-pill" style={{ backgroundColor: "#8b5e3c", color: "#fff" }}>
-                        Salvar
-                      </button>
-                      <button
-                        type="button"
-                        className="btn flex-grow-1 rounded-pill"
-                        style={{ backgroundColor: "#d9a679", color: "#5a3e2b" }}
-                        onClick={() => {
-                          setFormData({ ...userData }); // Restaura os dados originais
-                          setIsEditing(false); // Sai do modo de edição
-                        }}
-                      >
-                        Cancelar
-                      </button>
-                    </div>
-                  </form>
-                )}
-              </div>
-            </div>
+        <h2 className="text-center mb-4">Perfil</h2>
+        {error && (
+          <div className="alert alert-danger" role="alert">
+            {error}
           </div>
-
-          {/* Seção de pedidos do usuário */}
-          <div className="col-md-8">
-            <div className="card border-0 shadow-sm rounded-4" style={{ backgroundColor: "#f5e4d3" }}>
-              <div className="card-header bg-transparent border-0">
-                <h5 className="mb-0 cute-heading">Meus Pedidos</h5>
+        )}
+        {isEditing ? (
+          <div>
+            <h3>Editar Perfil</h3>
+            <form>
+              <div className="mb-3">
+                <label htmlFor="name" className="form-label">
+                  Nome
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  className="form-control"
+                  value={userData.name}
+                  onChange={(e) =>
+                    setUserData({ ...userData, name: e.target.value })
+                  }
+                />
               </div>
-              <div className="card-body">
-                {orders.length > 0 ? (
-                  <div className="table-responsive">
-                    <table className="table">
-                      <thead>
-                        <tr>
-                          <th>Pedido</th>
-                          <th>Data</th>
-                          <th>Status</th>
-                          <th>Total</th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {orders.map((order) => (
-                          <tr key={order.id}>
-                            <td>#{order.id}</td>
-                            <td>{order.date}</td>
-                            <td>
-                              {/* Exibe o status do pedido com cores diferentes */}
-                              <span
-                                className={`badge rounded-pill ${
-                                  order.status === "Entregue"
-                                    ? "bg-success"
-                                    : order.status === "Em transporte"
-                                      ? "bg-info"
-                                      : "bg-warning"
-                                }`}
-                                style={{ backgroundColor: order.status === "Entregue" ? "#8b5e3c" : "#d9a679", color: "#fff" }}
-                              >
-                                {order.status}
-                              </span>
-                            </td>
-                            <td>R$ {order.total.toFixed(2)}</td>
-                            <td>
-                              <button className="btn btn-sm btn-outline-primary rounded-pill">Detalhes</button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                ) : (
-                  <p className="text-center py-3">Você ainda não fez nenhum pedido.</p>
-                )}
+              <div className="mb-3">
+                <label htmlFor="email" className="form-label">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  className="form-control"
+                  value={userData.email}
+                  onChange={(e) =>
+                    setUserData({ ...userData, email: e.target.value })
+                  }
+                  disabled // Email não pode ser editado
+                />
               </div>
-            </div>
+              <div className="mb-3">
+                <label htmlFor="phone" className="form-label">
+                  Telefone
+                </label>
+                <input
+                  type="text"
+                  id="phone"
+                  className="form-control"
+                  value={userData.phone}
+                  onChange={(e) =>
+                    setUserData({ ...userData, phone: e.target.value })
+                  }
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="cpf" className="form-label">
+                  CPF
+                </label>
+                <input
+                  type="text"
+                  id="cpf"
+                  className="form-control"
+                  value={userData.cpf}
+                  onChange={(e) =>
+                    setUserData({ ...userData, cpf: e.target.value })
+                  }
+                />
+              </div>
+              <button
+                type="submit"
+                className="btn btn-primary"
+                onClick={handleSave}
+              >
+                Salvar
+              </button>
+            </form>
           </div>
-        </div>
+        ) : (
+          <div>
+            <p>
+              <strong>Nome:</strong> {userData.name}
+            </p>
+            <p>
+              <strong>Email:</strong> {userData.email}
+            </p>
+            <p>
+              <strong>Telefone:</strong> {userData.phone}
+            </p>
+            <p>
+              <strong>CPF:</strong> {userData.cpf}
+            </p>
+            <button
+              className="btn btn-secondary"
+              onClick={() => setIsEditing(true)}
+            >
+              Editar Perfil
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
 export default Perfil;
-

@@ -1,45 +1,51 @@
-import { useState } from "react"
-import { Link, Navigate } from "react-router"
+import React, { useState } from "react";
+import { Link, Navigate } from "react-router";
 
-// componente de login de usuário
-const Login = ({ handleLogin, isLoggedIn }) => {
-  const [email, setEmail] = useState("") // estado para armazenar o email do usuário
-  const [password, setPassword] = useState("") // estado para armazenar a senha do usuário
-  const [error, setError] = useState("") // estado para exibir mensagens de erro
-  
+const Login = ({ handleLogin }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // função para validar os dados do formulário
-  const validateForm = () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/ // regex para validar o formato do email
-    if (!emailRegex.test(email)) {
-      setError("Por favor, insira um email válido.") // define mensagem de erro para email inválido
-      return false
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(
+        "https://plushing.somee.com/Users/login?useCookies=false&useSessionCookies=false",
+        {
+          method: "POST",
+          headers: {
+            accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        setError(errorData.message || "Erro ao realizar login.");
+        return;
+      }
+
+      const data = await response.json();
+      setError(null);
+      setIsLoggedIn(true); // Atualiza o estado de login
+      handleLogin(data); // Chama a função de login passada como prop
+
+      // armazenar no LocalStorage
+      localStorage.setItem("user", JSON.stringify(data));
+      localStorage.setItem("email", email); // Armazena o email no LocalStorage
+      localStorage.setItem("isLoggedIn", "true");
+      console.log("Login bem-sucedido:", data);
+
+      //redirecionar para a página inicial após o login
+      window.location.href = "/"; // Redireciona para a página inicial
+    } catch (err) {
+      setError("Erro de conexão com o servidor.");
     }
-
-    if (password.length < 6) {
-      setError("A senha deve ter pelo menos 6 caracteres.") // define mensagem de erro para senha curta
-      return false
-    }
-
-    return true // retorna true se o formulário for válido
-  }
-
-  // função para lidar com o envio do formulário
-  const handleSubmit = (e) => {
-    e.preventDefault(); // previne o comportamento padrão do formulário
-    setError(""); // limpa mensagens de erro anteriores
-
-    if (validateForm()) {
-      const novoUsuario = { email }; // Cria um objeto com o email do usuário
-      localStorage.setItem("devlogin", JSON.stringify(novoUsuario)); // Salva no localStorage
-      handleLogin(novoUsuario); // Chama a função de login passada como prop
-    }
-  }
-
-  // redireciona para a página inicial se o usuário já estiver logado
-  if (isLoggedIn) {
-    return <Navigate to="/" replace />
-  }
+  };
 
   return (
     <div className="login-page py-5">
@@ -50,14 +56,16 @@ const Login = ({ handleLogin, isLoggedIn }) => {
               <div className="card-body p-4">
                 <h2 className="text-center mb-4 cute-heading">Entrar</h2>
 
-                {/* exibe mensagens de erro, se houver */}
                 {error && (
-                  <div className="alert alert-danger rounded-pill" role="alert" style={{ backgroundColor: "#d9a679", color: "#5a3e2b" }}>
+                  <div
+                    className="alert alert-danger rounded-pill"
+                    role="alert"
+                    style={{ backgroundColor: "#d9a679", color: "#5a3e2b" }}
+                  >
                     {error}
                   </div>
                 )}
 
-                {/* formulário de login */}
                 <form onSubmit={handleSubmit}>
                   <div className="mb-3">
                     <label htmlFor="email" className="form-label">
@@ -65,44 +73,51 @@ const Login = ({ handleLogin, isLoggedIn }) => {
                     </label>
                     <input
                       type="email"
-                      className="form-control rounded-pill"
                       id="email"
-                      value={email} // vincula o valor do input ao estado do email
-                      onChange={(e) => setEmail(e.target.value)} // atualiza o estado do email ao digitar
+                      className="form-control rounded-pill"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       required
                     />
                   </div>
-
                   <div className="mb-3">
                     <label htmlFor="password" className="form-label">
                       Senha
                     </label>
                     <input
                       type="password"
-                      className="form-control rounded-pill"
                       id="password"
-                      value={password} // vincula o valor do input ao estado da senha
-                      onChange={(e) => setPassword(e.target.value)} // atualiza o estado da senha ao digitar
+                      className="form-control rounded-pill"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                       required
                     />
                   </div>
-
                   <div className="mb-3 form-check">
-                    <input type="checkbox" className="form-check-input" id="rememberMe" />
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      id="rememberMe"
+                    />
                     <label className="form-check-label" htmlFor="rememberMe">
                       Lembrar de mim
                     </label>
                   </div>
-
-                  <button type="submit" className="btn w-100 rounded-pill" style={{ backgroundColor: "#8b5e3c", color: "#fff" }}>
+                  <button
+                    type="submit"
+                    className="btn w-100 rounded-pill"
+                    style={{ backgroundColor: "#8b5e3c", color: "#fff" }}
+                  >
                     Entrar
                   </button>
                 </form>
 
-                {/* link para a página de registro */}
                 <div className="text-center mt-3">
                   <p>
-                    Não tem uma conta? <Link to="/registro" style={{ color: "#8b5e3c" }}>Registre-se</Link>
+                    Não tem uma conta?{" "}
+                    <Link to="/registro" style={{ color: "#8b5e3c" }}>
+                      Registre-se
+                    </Link>
                   </p>
                 </div>
               </div>
@@ -111,8 +126,7 @@ const Login = ({ handleLogin, isLoggedIn }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
-
+export default Login;

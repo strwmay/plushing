@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router";
 
 // Componente de registro de usuário
-const Registro = ({ handleLogin, isLoggedIn }) => {
+const Registro = ({ isLoggedIn }) => {
   const navigate = useNavigate();
   // Estado para armazenar os dados do formulário
   const [formData, setFormData] = useState({

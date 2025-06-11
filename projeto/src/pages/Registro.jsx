@@ -1,60 +1,87 @@
-import { useState } from "react"
-import { Link, Navigate } from "react-router"
+import { useState } from "react";
+import { Link, Navigate, useNavigate } from "react-router";
 
 // Componente de registro de usuário
 const Registro = ({ handleLogin, isLoggedIn }) => {
+  const navigate = useNavigate();
   // Estado para armazenar os dados do formulário
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
-  })
-  const [error, setError] = useState("") // Estado para mensagens de erro
+  });
+  const [error, setError] = useState(""); // Estado para mensagens de erro
 
   // Atualiza os dados do formulário conforme o usuário digita
   const handleChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
-    })
-  }
+    });
+  };
 
   // Valida os dados do formulário
   const validateForm = () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/ // Validação básica de email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Validação básica de email
     if (!emailRegex.test(formData.email)) {
-      setError("Por favor, insira um email válido.")
-      return false
+      setError("Por favor, insira um email válido.");
+      return false;
     }
 
     if (formData.password.length < 6) {
-      setError("A senha deve ter pelo menos 6 caracteres.")
-      return false
+      setError("A senha deve ter pelo menos 6 caracteres.");
+      return false;
     }
 
     if (formData.password !== formData.confirmPassword) {
-      setError("As senhas não coincidem.")
-      return false
+      setError("As senhas não coincidem.");
+      return false;
     }
 
-    return true
-  }
+    return true;
+  };
 
   // Lida com o envio do formulário
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    setError("") // Limpa mensagens de erro
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(""); // Limpa mensagens de erro
 
     if (validateForm()) {
-      handleLogin() // Simula o login após o registro
+      try {
+        const response = await fetch(
+          "https://plushing.somee.com/Users/register",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              accept: "*/*",
+            },
+            body: JSON.stringify({
+              email: formData.email,
+              password: formData.password,
+            }),
+          }
+        );
+        console.log(response);
+        if (response.ok) {
+          console.log("Usuário cadastrado com sucesso:");
+          navigate("/login");
+        } else {
+          const errorData = await response.json();
+          setError(errorData.message || "Erro ao registrar usuário.");
+        }
+      } catch (error) {
+        console.error("Erro ao conectar com o servidor:", error);
+        setError("Erro ao conectar com o servidor.");
+      }
     }
-  }
+  };
 
   // Redireciona para a página inicial se o usuário já estiver logado
   if (isLoggedIn) {
-    return <Navigate to="/" replace />
+    return <Navigate to="/" replace />;
   }
 
   return (
@@ -68,7 +95,11 @@ const Registro = ({ handleLogin, isLoggedIn }) => {
 
                 {/* Exibe mensagens de erro, se houver */}
                 {error && (
-                  <div className="alert alert-danger rounded-pill" role="alert" style={{ backgroundColor: "#d9a679", color: "#5a3e2b" }}>
+                  <div
+                    className="alert alert-danger rounded-pill"
+                    role="alert"
+                    style={{ backgroundColor: "#d9a679", color: "#5a3e2b" }}
+                  >
                     {error}
                   </div>
                 )}
@@ -135,7 +166,11 @@ const Registro = ({ handleLogin, isLoggedIn }) => {
                     />
                   </div>
 
-                  <button type="submit" className="btn w-100 rounded-pill" style={{ backgroundColor: "#8b5e3c", color: "#fff" }}>
+                  <button
+                    type="submit"
+                    className="btn w-100 rounded-pill"
+                    style={{ backgroundColor: "#8b5e3c", color: "#fff" }}
+                  >
                     Registrar
                   </button>
                 </form>
@@ -143,7 +178,10 @@ const Registro = ({ handleLogin, isLoggedIn }) => {
                 {/* Link para a página de login */}
                 <div className="text-center mt-3">
                   <p>
-                    Já tem uma conta? <Link to="/login" style={{ color: "#8b5e3c" }}>Entrar</Link>
+                    Já tem uma conta?{" "}
+                    <Link to="/login" style={{ color: "#8b5e3c" }}>
+                      Entrar
+                    </Link>
                   </p>
                 </div>
               </div>
@@ -152,7 +190,7 @@ const Registro = ({ handleLogin, isLoggedIn }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Registro
+export default Registro;

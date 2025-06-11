@@ -16,7 +16,7 @@ const Perfil = () => {
 
     setUserData((prevData) => ({ ...prevData, email: email || "" }));
     if (email) {
-      fetch(`https://localhost:7107/api/Acoes/verificar-cliente/${email}`, {
+      fetch(`https://plushing.somee.com/api/Acoes/verificar-cliente/${email}`, {
         method: "GET",
         headers: {
           accept: "*/*",
@@ -35,9 +35,9 @@ const Perfil = () => {
         .then((data) => {
           if (data) {
             setUserData({
-              name: data.name || "",
+              name: data.nome || "",
               email: data.email || email, // Usa o email do cliente ou o do localStorage
-              phone: data.phone || "",
+              phone: data.telefone || "",
               cpf: data.cpf || "", // Adiciona o CPF retornado pelo servidor
             });
           }
@@ -57,7 +57,7 @@ const Perfil = () => {
 
     console.log(email);
 
-    fetch(`https://localhost:7107/api/Acoes/cadastar-perfil/${email}`, {
+    fetch(`https://plushing.somee.com/api/Acoes/cadastar-perfil/${email}`, {
       method: "PUT", // Altera o método para PUT
       headers: {
         "Content-Type": "application/json",

@@ -33,3 +33,10 @@ npm install
 # 4. Inicie o servidor de desenvolvimento
 npm run dev
 ```
+
+
+## ⋆ Links Úteis
+‧₊ [Back-End](https://github.com/JulianaFulanetto/Plushing)
+ | [Front-End](https://github.com/strwmay/plushing)
+ | [Swagger API](https://www.plushing.somee.com/swagger/index.html)
+ | [Site na Vercel](https://plushing-git-main-maysas-projects-764dba61.vercel.app/) ‧₊

@@ -1,5 +1,4 @@
-"use client" // indica que este componente é renderizado no cliente
-import { useState } from "react" // importa o hook useState para gerenciar estados
+import { useState } from "react"; // importa o hook useState para gerenciar estados
 
 // define as opções de cores disponíveis para o ursinho
 const colorOptions = [
@@ -24,7 +23,7 @@ const colorOptions = [
   { name: "Café", hex: "#a97a7a" },
   { name: "Chantilly", hex: "#dddddd" },
   { name: "Cravo", hex: "#66747f" },
-]
+];
 
 // define os tamanhos disponíveis para o ursinho
 const bearSizes = [
@@ -32,7 +31,7 @@ const bearSizes = [
   { id: "pequeno", name: "Pequeno - 20cm", price: 59.9 },
   { id: "medio", name: "Médio - 30cm", price: 89.9 },
   { id: "grande", name: "Grande - 40cm", price: 119.9 },
-]
+];
 
 // define os acessórios disponíveis para personalização
 const accessories = [
@@ -41,41 +40,46 @@ const accessories = [
   { id: "oculos", name: "Óculos", price: 12.9, emoji: "👓" },
   { id: "chapeu", name: "Chapéu", price: 14.9, emoji: "🧢" },
   { id: "gravata", name: "Gravata", price: 9.9, emoji: "👔" },
-]
+];
 
 // componente principal de personalização do ursinho
 const Customize = ({ addToCart }) => {
   // gerencia o passo atual do processo de personalização
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useState(1);
   // gerencia o tamanho selecionado (padrão: médio)
-  const [selectedSize, setSelectedSize] = useState(bearSizes[1])
+  const [selectedSize, setSelectedSize] = useState(bearSizes[1]);
   // gerencia a cor selecionada (padrão: pêssego)
-  const [selectedColor, setSelectedColor] = useState(colorOptions[2])
+  const [selectedColor, setSelectedColor] = useState(colorOptions[2]);
   // gerencia os acessórios selecionados
-  const [selectedAccessories, setSelectedAccessories] = useState([])
+  const [selectedAccessories, setSelectedAccessories] = useState([]);
   // gerencia o nome do ursinho
-  const [bearName, setBearName] = useState("")
+  const [bearName, setBearName] = useState("");
   // gerencia o nome do destinatário do presente
-  const [giftTo, setGiftTo] = useState("")
+  const [giftTo, setGiftTo] = useState("");
 
   // alterna a seleção de um acessório
   const handleAccessoryToggle = (accessory) => {
     // verifica se o acessório já está selecionado
     if (selectedAccessories.find((a) => a.id === accessory.id)) {
       // remove o acessório da lista
-      setSelectedAccessories(selectedAccessories.filter((a) => a.id !== accessory.id))
+      setSelectedAccessories(
+        selectedAccessories.filter((a) => a.id !== accessory.id)
+      );
     } else {
       // adiciona o acessório à lista
-      setSelectedAccessories([...selectedAccessories, accessory])
+      setSelectedAccessories([...selectedAccessories, accessory]);
     }
-  }
+  };
 
   // calcula o preço total com base no tamanho e acessórios selecionados
   const calculateTotal = () => {
-    const basePrice = selectedSize.price // preço base do tamanho
-    const accessoriesPrice = selectedAccessories.reduce((sum, acc) => sum + acc.price, 0) // soma os preços dos acessórios
-    return basePrice + accessoriesPrice // retorna o preço total
-  }
+    const basePrice = selectedSize.price; // preço base do tamanho
+    const accessoriesPrice = selectedAccessories.reduce(
+      (sum, acc) => sum + acc.price,
+      0
+    ); // soma os preços dos acessórios
+    return basePrice + accessoriesPrice; // retorna o preço total
+  };
 
   // adiciona o ursinho personalizado ao carrinho
   const handleAddToCart = () => {
@@ -87,16 +91,16 @@ const Customize = ({ addToCart }) => {
       bearName: bearName, // nome do ursinho
       giftTo: giftTo, // nome do destinatário
       price: calculateTotal(), // calcula o preço total
-    }
+    };
 
-    addToCart(item) // chama a função para adicionar o item ao carrinho
-    alert("Ursinho adicionado ao carrinho!") // exibe uma mensagem de sucesso
+    addToCart(item); // chama a função para adicionar o item ao carrinho
+    alert("Ursinho adicionado ao carrinho!"); // exibe uma mensagem de sucesso
     // reseta os estados para os valores iniciais
-    setStep(1)
-    setSelectedAccessories([])
-    setBearName("")
-    setGiftTo("")
-  }
+    setStep(1);
+    setSelectedAccessories([]);
+    setBearName("");
+    setGiftTo("");
+  };
 
   // renderiza o conteúdo do passo atual
   const renderStepContent = () => {
@@ -105,19 +109,26 @@ const Customize = ({ addToCart }) => {
         // renderiza a seleção de tamanho
         return (
           <div className="step-content">
-            <h3 className="mb-4 cute-heading">Escolha o tamanho do seu ursinho</h3>
+            <h3 className="mb-4 cute-heading">
+              Escolha o tamanho do seu ursinho
+            </h3>
             <div className="row g-3">
               {bearSizes.map((size) => (
                 <div className="col-md-4" key={size.id}>
                   <div
-                    className={`card h-100 border-0 shadow-sm rounded-4 ${selectedSize.id === size.id ? "selected-card" : ""}`}
+                    className={`card h-100 border-0 shadow-sm rounded-4 ${
+                      selectedSize.id === size.id ? "selected-card" : ""
+                    }`}
                     onClick={() => setSelectedSize(size)} // atualiza o tamanho selecionado
                     style={{ cursor: "pointer" }}
                   >
                     <div className="card-body text-center p-4">
                       <h5 className="card-title cute-heading">{size.name}</h5>
                       <p className="card-text">R$ {size.price.toFixed(2)}</p>
-                      {selectedSize.id === size.id && <div className="selected-badge">✓</div>} {/* exibe um ícone de seleção */}
+                      {selectedSize.id === size.id && (
+                        <div className="selected-badge">✓</div>
+                      )}{" "}
+                      {/* exibe um ícone de seleção */}
                     </div>
                   </div>
                 </div>
@@ -133,7 +144,7 @@ const Customize = ({ addToCart }) => {
               </button>
             </div>
           </div>
-        )
+        );
       case 2:
         // renderiza a seleção de cor
         return (
@@ -143,7 +154,9 @@ const Customize = ({ addToCart }) => {
               {colorOptions.map((color) => (
                 <div
                   key={color.hex}
-                  className={`color-option ${selectedColor.hex === color.hex ? "selected" : ""}`}
+                  className={`color-option ${
+                    selectedColor.hex === color.hex ? "selected" : ""
+                  }`}
                   style={{ backgroundColor: color.hex }}
                   onClick={() => setSelectedColor(color)} // atualiza a cor selecionada
                   title={color.name} // exibe o nome da cor ao passar o mouse
@@ -167,24 +180,37 @@ const Customize = ({ addToCart }) => {
               </button>
             </div>
           </div>
-        )
+        );
       case 3:
         // renderiza a seleção de acessórios
         return (
           <div className="step-content">
-            <h3 className="mb-4 cute-heading">Escolha os acessórios (opcional)</h3>
+            <h3 className="mb-4 cute-heading">
+              Escolha os acessórios (opcional)
+            </h3>
             <div className="row g-3">
               {accessories.map((accessory) => (
                 <div className="col-6 col-md-3" key={accessory.id}>
                   <div
-                    className={`card h-100 border-0 shadow-sm rounded-4 ${selectedAccessories.find((a) => a.id === accessory.id) ? "selected-card" : ""}`}
+                    className={`card h-100 border-0 shadow-sm rounded-4 ${
+                      selectedAccessories.find((a) => a.id === accessory.id)
+                        ? "selected-card"
+                        : ""
+                    }`}
                     onClick={() => handleAccessoryToggle(accessory)} // alterna a seleção do acessório
                     style={{ cursor: "pointer" }}
                   >
                     <div className="card-body text-center p-4">
-                      <div className="accessory-emoji mb-2">{accessory.emoji}</div> {/* exibe o emoji do acessório */}
-                      <h5 className="card-title cute-heading">{accessory.name}</h5>
-                      <p className="card-text">R$ {accessory.price.toFixed(2)}</p>
+                      <div className="accessory-emoji mb-2">
+                        {accessory.emoji}
+                      </div>{" "}
+                      {/* exibe o emoji do acessório */}
+                      <h5 className="card-title cute-heading">
+                        {accessory.name}
+                      </h5>
+                      <p className="card-text">
+                        R$ {accessory.price.toFixed(2)}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -207,7 +233,7 @@ const Customize = ({ addToCart }) => {
               </button>
             </div>
           </div>
-        )
+        );
       case 4:
         // renderiza o resumo final e formulário de nomeação
         return (
@@ -314,10 +340,37 @@ const Customize = ({ addToCart }) => {
                         key={acc.id}
                         className="accessory-icon"
                         style={{
-                          position: acc.id === "laço" || acc.id === "gravata" || acc.id === "chapeu" || acc.id === "oculos" ? "absolute" : "absolute",
-                          top: acc.id === "oculos" ? "30px" : acc.id === "chapeu" ? "-15px" : acc.id === "laço" ? "-10px" : acc.id === "gravata" ? "125px" : `${15 + index * 25}px`,
-                          left: acc.id === "laço" ? "80px" : acc.id === "oculos" || acc.id === "chapeu" || acc.id === "gravata" ? "50%" : "auto",
-                          transform: acc.id === "oculos" || acc.id === "chapeu" || acc.id === "gravata" ? "translateX(-50%)" : "none",
+                          position:
+                            acc.id === "laço" ||
+                            acc.id === "gravata" ||
+                            acc.id === "chapeu" ||
+                            acc.id === "oculos"
+                              ? "absolute"
+                              : "absolute",
+                          top:
+                            acc.id === "oculos"
+                              ? "30px"
+                              : acc.id === "chapeu"
+                              ? "-15px"
+                              : acc.id === "laço"
+                              ? "-10px"
+                              : acc.id === "gravata"
+                              ? "125px"
+                              : `${15 + index * 25}px`,
+                          left:
+                            acc.id === "laço"
+                              ? "80px"
+                              : acc.id === "oculos" ||
+                                acc.id === "chapeu" ||
+                                acc.id === "gravata"
+                              ? "50%"
+                              : "auto",
+                          transform:
+                            acc.id === "oculos" ||
+                            acc.id === "chapeu" ||
+                            acc.id === "gravata"
+                              ? "translateX(-50%)"
+                              : "none",
                           fontSize: acc.id === "oculos" ? "60px" : "20px",
                         }}
                       >
@@ -325,21 +378,27 @@ const Customize = ({ addToCart }) => {
                       </div>
                     ))}
                   </div>
-                  <h5 className="cute-heading">{selectedSize.name}</h5> {/* exibe o tamanho selecionado */}
-                  <p>Cor: {selectedColor.name}</p> {/* exibe a cor selecionada */}
+                  <h5 className="cute-heading">{selectedSize.name}</h5>{" "}
+                  {/* exibe o tamanho selecionado */}
+                  <p>Cor: {selectedColor.name}</p>{" "}
+                  {/* exibe a cor selecionada */}
                   {selectedAccessories.length > 0 && (
                     <div>
                       <p>Acessórios:</p>
                       <ul className="list-unstyled">
                         {selectedAccessories.map((acc) => (
                           <li key={acc.id}>
-                            {acc.emoji} {acc.name} - R$ {acc.price.toFixed(2)} {/* exibe os acessórios selecionados */}
+                            {acc.emoji} {acc.name} - R$ {acc.price.toFixed(2)}{" "}
+                            {/* exibe os acessórios selecionados */}
                           </li>
                         ))}
                       </ul>
                     </div>
                   )}
-                  <h4 className="mt-3 cute-heading">Total: R$ {calculateTotal().toFixed(2)}</h4> {/* exibe o preço total */}
+                  <h4 className="mt-3 cute-heading">
+                    Total: R$ {calculateTotal().toFixed(2)}
+                  </h4>{" "}
+                  {/* exibe o preço total */}
                 </div>
               </div>
 
@@ -391,25 +450,29 @@ const Customize = ({ addToCart }) => {
               </button>
             </div>
           </div>
-        )
+        );
       default:
-        return null // caso o passo não seja válido, não renderiza nada
+        return null; // caso o passo não seja válido, não renderiza nada
     }
-  }
+  };
 
   return (
     <div className="customize-page">
       {/* renderiza o cabeçalho e o progresso */}
       <div className="cloud-bg">
         <div className="container py-5">
-          <h1 className="text-center mb-5 cute-heading">Personalize seu Ursinho</h1>
-
+          <h1 className="text-center mb-5 cute-heading">
+            Personalize seu Ursinho
+          </h1>
           <div className="progress-container mb-5">
             <div className="progress rounded-pill">
               <div
                 className="progress-bar"
                 role="progressbar"
-                style={{ width: `${(step / 4) * 100}%`, backgroundColor: "#8b5e3c" }} // calcula a porcentagem do progresso
+                style={{
+                  width: `${(step / 4) * 100}%`,
+                  backgroundColor: "#8b5e3c",
+                }} // calcula a porcentagem do progresso
                 aria-valuenow={(step / 4) * 100}
                 aria-valuemin="0"
                 aria-valuemax="100"
@@ -417,36 +480,40 @@ const Customize = ({ addToCart }) => {
             </div>
             <div className="step-indicators d-flex justify-content-between mt-2">
               {/* indicador do passo 1: tamanho */}
-              <div className={`step-indicator ${step >= 1 ? "active" : ""}`}> 
-                <span className="step-number">1</span> 
-                <span className="step-label d-none d-md-inline">Tamanho</span> 
+              <div className={`step-indicator ${step >= 1 ? "active" : ""}`}>
+                <span className="step-number">1</span>
+                <span className="step-label d-none d-md-inline">Tamanho</span>
               </div>
 
               {/* cor */}
-              <div className={`step-indicator ${step >= 2 ? "active" : ""}`}> 
-                <span className="step-number">2</span> 
-                <span className="step-label d-none d-md-inline">Cor</span> 
+              <div className={`step-indicator ${step >= 2 ? "active" : ""}`}>
+                <span className="step-number">2</span>
+                <span className="step-label d-none d-md-inline">Cor</span>
               </div>
 
               {/* acessórios */}
-              <div className={`step-indicator ${step >= 3 ? "active" : ""}`}> 
-                <span className="step-number">3</span> 
-                <span className="step-label d-none d-md-inline">Acessórios</span> 
+              <div className={`step-indicator ${step >= 3 ? "active" : ""}`}>
+                <span className="step-number">3</span>
+                <span className="step-label d-none d-md-inline">
+                  Acessórios
+                </span>
               </div>
 
               {/* finalizar */}
-              <div className={`step-indicator ${step >= 4 ? "active" : ""}`}> 
-                <span className="step-number">4</span> 
-                <span className="step-label d-none d-md-inline">Finalizar</span> 
+              <div className={`step-indicator ${step >= 4 ? "active" : ""}`}>
+                <span className="step-number">4</span>
+                <span className="step-label d-none d-md-inline">Finalizar</span>
               </div>
             </div>
           </div>
-
-          <div className="customize-content card border-0 shadow-sm rounded-4 p-4">{renderStepContent()}</div> {/* renderiza o conteúdo do passo atual */}
+          <div className="customize-content card border-0 shadow-sm rounded-4 p-4">
+            {renderStepContent()}
+          </div>{" "}
+          {/* renderiza o conteúdo do passo atual */}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Customize
+export default Customize;

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, Navigate } from "react-router";
 
 const Login = ({ handleLogin }) => {
+  const navigate = Navigate(); // Hook para navegação
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -41,9 +42,9 @@ const Login = ({ handleLogin }) => {
       console.log("Login bem-sucedido:", data);
 
       //redirecionar para a página inicial após o login
-      window.location.href = "/"; // Redireciona para a página inicial
+      navigate("/"); // Redireciona para a página inicial
     } catch (err) {
-      setError("Erro de conexão com o servidor.");
+      setError("Erro de conexão com o servidor.", err);
     }
   };
 

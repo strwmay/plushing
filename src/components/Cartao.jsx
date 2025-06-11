@@ -35,12 +35,19 @@ const Cartao = () => {
       return;
     }
     if (!validarCodigoSeguranca(codigoSeguranca)) {
-      setErroCodigoSeguranca("Código de segurança inválido. Deve conter 3 dígitos.");
+      setErroCodigoSeguranca(
+        "Código de segurança inválido. Deve conter 3 dígitos."
+      );
       return;
     }
 
     // Lógica para salvar as alterações
-    console.log("Alterações salvas:", { numeroCartao, nomeImpresso, validade, codigoSeguranca });
+    console.log("Alterações salvas:", {
+      numeroCartao,
+      nomeImpresso,
+      validade,
+      codigoSeguranca,
+    });
     setErroNumeroCartao("");
     setErroValidade("");
     setErroCodigoSeguranca("");
@@ -60,7 +67,9 @@ const Cartao = () => {
               <input
                 maxLength={16}
                 type="text"
-                className={`rounded-5 form-control ${erroNumeroCartao ? "is-invalid" : ""}`}
+                className={`rounded-5 form-control ${
+                  erroNumeroCartao ? "is-invalid" : ""
+                }`}
                 value={numeroCartao}
                 onChange={(e) => setNumeroCartao(e.target.value)}
                 onKeyPress={(e) => {
@@ -70,16 +79,22 @@ const Cartao = () => {
                 }}
                 onBlur={() => {
                   if (!validarNumeroCartao(numeroCartao)) {
-                    setErroNumeroCartao("Número do cartão inválido. Deve conter 16 dígitos.");
+                    setErroNumeroCartao(
+                      "Número do cartão inválido. Deve conter 16 dígitos."
+                    );
                   } else {
                     setErroNumeroCartao("");
                   }
                 }}
               />
-              {erroNumeroCartao && <div className="invalid-feedback">{erroNumeroCartao}</div>}
+              {erroNumeroCartao && (
+                <div className="invalid-feedback">{erroNumeroCartao}</div>
+              )}
             </div>
           ) : (
-            <p className="card-text">{numeroCartao || "Seu número do cartão aqui"}</p>
+            <p className="card-text">
+              {numeroCartao || "Seu número do cartão aqui"}
+            </p>
           )}
         </div>
         <hr />
@@ -107,7 +122,9 @@ const Cartao = () => {
             <div className="w-100">
               <input
                 type="text"
-                className={`rounded-5 form-control ${erroValidade ? "is-invalid" : ""}`}
+                className={`rounded-5 form-control ${
+                  erroValidade ? "is-invalid" : ""
+                }`}
                 value={validade}
                 onChange={(e) => setValidade(e.target.value)}
                 onBlur={() => {
@@ -118,7 +135,9 @@ const Cartao = () => {
                   }
                 }}
               />
-              {erroValidade && <div className="invalid-feedback">{erroValidade}</div>}
+              {erroValidade && (
+                <div className="invalid-feedback">{erroValidade}</div>
+              )}
             </div>
           ) : (
             <p className="card-text">{validade || "MM/AA"}</p>
@@ -134,7 +153,9 @@ const Cartao = () => {
               <input
                 maxLength={3}
                 type="text"
-                className={`rounded-5 form-control ${erroCodigoSeguranca ? "is-invalid" : ""}`}
+                className={`rounded-5 form-control ${
+                  erroCodigoSeguranca ? "is-invalid" : ""
+                }`}
                 value={codigoSeguranca}
                 onChange={(e) => setCodigoSeguranca(e.target.value)}
                 onKeyPress={(e) => {
@@ -144,13 +165,17 @@ const Cartao = () => {
                 }}
                 onBlur={() => {
                   if (!validarCodigoSeguranca(codigoSeguranca)) {
-                    setErroCodigoSeguranca("Código de segurança inválido. Deve conter 3 dígitos.");
+                    setErroCodigoSeguranca(
+                      "Código de segurança inválido. Deve conter 3 dígitos."
+                    );
                   } else {
                     setErroCodigoSeguranca("");
                   }
                 }}
               />
-              {erroCodigoSeguranca && <div className="invalid-feedback">{erroCodigoSeguranca}</div>}
+              {erroCodigoSeguranca && (
+                <div className="invalid-feedback">{erroCodigoSeguranca}</div>
+              )}
             </div>
           ) : (
             <p className="card-text">{codigoSeguranca || "XXX"}</p>
